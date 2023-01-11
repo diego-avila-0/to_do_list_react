@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 # to_do_list_react
-=======
+
+Visita el proyecto: [Clic aquí](https://diego-avila-0.github.io/to_do_list_react).
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
