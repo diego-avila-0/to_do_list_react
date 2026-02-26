@@ -3,14 +3,17 @@ import '../css-custom/task.css';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 export function Task({ id, text, done, checkTask, deleteTask }) {
-  return(
-    <div className={`container_task ${ done ? 'done' : ''}`}>
+  return (
+    <div className={`container_task ${done ? 'done' : ''}`}>
+      <div className="task_status_light">
+        <span className={`status_dot ${done ? 'status_done' : 'status_pending'}`}></span>
+      </div>
       <div className="text_task" onClick={() => checkTask(id)}>
         {text}
       </div>
       <div className="container_icons_task" onClick={() => deleteTask(id)}>
-        <AiOutlineCloseCircle  className='icon_task'/>
+        <AiOutlineCloseCircle className='icon_task' />
       </div>
     </div>
-  )
+  );
 }
