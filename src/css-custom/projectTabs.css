@@ -1,0 +1,179 @@
+/* === PROJECT TABS === */
+.project-tabs {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 102, 0, 0.15);
+  padding-bottom: 15px;
+}
+
+.tabs-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #888;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px 4px 0 0;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #ff8800;
+  border-color: rgba(255, 136, 0, 0.3);
+  background: rgba(255, 102, 0, 0.05);
+}
+
+.tab-active {
+  color: #ff6600;
+  border-color: #ff6600;
+  border-bottom-color: transparent;
+  background: rgba(255, 102, 0, 0.08);
+  text-shadow: 0 0 8px rgba(255, 102, 0, 0.4);
+}
+
+.tab-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tab:hover .tab-actions {
+  opacity: 1;
+}
+
+.tab-icon {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tab-edit:hover {
+  color: #00ccff;
+}
+
+.tab-delete:hover {
+  color: #ff3333;
+}
+
+.tab-confirm {
+  color: #00ff88;
+}
+
+.tab-confirm:hover {
+  color: #33ffaa;
+}
+
+/* Tab edit form */
+.tab-edit-form {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tab-edit-input {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  width: 90px;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #ff6600;
+  border-radius: 3px;
+  color: #ff8800;
+  outline: none;
+}
+
+/* Add project button */
+.tab-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1px dashed rgba(255, 102, 0, 0.3);
+  border-radius: 4px;
+  color: #ff6600;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.tab-add:hover {
+  border-color: #ff6600;
+  background: rgba(255, 102, 0, 0.1);
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.2);
+}
+
+/* New project form */
+.tab-new-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tab-new-input {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  width: 110px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #ff6600;
+  border-radius: 4px;
+  color: #ff8800;
+  outline: none;
+}
+
+.tab-new-input::placeholder {
+  color: rgba(255, 136, 0, 0.4);
+}
+
+.tab-new-btn,
+.tab-cancel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.tab-new-btn {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.tab-new-btn:hover {
+  background: rgba(0, 255, 136, 0.25);
+}
+
+.tab-cancel-btn {
+  background: rgba(255, 51, 51, 0.15);
+  color: #ff3333;
+}
+
+.tab-cancel-btn:hover {
+  background: rgba(255, 51, 51, 0.25);
+}

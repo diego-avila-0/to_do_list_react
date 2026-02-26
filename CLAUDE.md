@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A React-based to-do list application ("Mis tareas") with a dark-themed UI. Users can add, complete, and delete tasks. Built with Create React App (CRA), deployed to GitHub Pages. The UI is in **Spanish**.
+A React-based to-do list application ("Mis Tareas") with a vintage **Back to the Future** inspired UI. Features project-based task organization with tabs, task priorities, inline editing, filtering, and browser localStorage persistence. Built with Create React App (CRA), deployed to GitHub Pages. The UI is in **Spanish**.
 
 ## Tech Stack
 
@@ -13,23 +13,26 @@ A React-based to-do list application ("Mis tareas") with a dark-themed UI. Users
 - **Testing:** Jest + React Testing Library (via CRA)
 - **Icons:** react-icons (Ant Design icons)
 - **IDs:** uuid v9
+- **Persistence:** Browser localStorage
 
 ## Project Structure
 
 ```
 src/
 ├── index.js              # Entry point — renders <App /> into DOM
-├── App.jsx               # Root component — renders title + ListTasks
+├── App.jsx               # Root component — manages projects state + localStorage
 ├── components/
-│   ├── listTasks.jsx     # Parent stateful component — manages task array
-│   ├── task.jsx          # Stateless task display — toggle done / delete
-│   └── taskForm.jsx      # Controlled input form — creates new tasks
+│   ├── projectTabs.jsx   # Project tab navigation — add/rename/delete projects
+│   ├── listTasks.jsx     # Task list with filters and stats
+│   ├── task.jsx          # Task display — toggle done / edit / delete / priority
+│   └── taskForm.jsx      # Controlled input form — creates new tasks with priority
 ├── css-custom/
-│   ├── listTasks.css     # Styles for ListTasks
-│   ├── task.css          # Styles for Task
-│   └── taskForm.css      # Styles for TaskForm
-├── App.css               # App-level layout styles
-├── index.css             # Global base styles (fonts, body)
+│   ├── projectTabs.css   # Styles for ProjectTabs
+│   ├── listTasks.css     # Styles for ListTasks (stats, filters, empty state)
+│   ├── task.css          # Styles for Task (priority badges, edit mode)
+│   └── taskForm.css      # Styles for TaskForm (priority selector)
+├── App.css               # App-level layout styles + BTTF header
+├── index.css             # Global base styles (fonts, scrollbar, theme)
 ├── App.test.js           # Smoke test for App component
 └── setupTests.js         # Jest setup — imports jest-dom matchers
 public/
@@ -52,32 +55,52 @@ public/
 ### Component Hierarchy
 
 ```
-App
-└── ListTasks (state: tasks[])
+App (state: projects[], activeProjectId — persisted to localStorage)
+├── ProjectTabs (props: projects, callbacks for add/delete/rename/select)
+└── ListTasks (props: tasks[], onUpdateTasks callback)
     ├── TaskForm (props: addTask callback)
-    └── Task[] (props: id, text, done, checkTask, deleteTask)
+    └── Task[] (props: id, text, done, priority, createdAt, checkTask, deleteTask, editTask)
 ```
 
 ### State Management
 
-- **Local React state only** — `useState` in `ListTasks`
-- No Redux, Context API, or external state libraries
-- State is **not persisted** — resets on page refresh
-- Task shape: `{ id: string (UUID), text: string, done: boolean }`
+- **Local React state** — `useState` in `App` for projects and active project
+- `ListTasks` receives tasks via props and reports changes via `onUpdateTasks` callback
+- **Persisted to localStorage** under key `bttf_todo_data`
+- State auto-saves on every change via `useEffect`
+- Project shape: `{ id: string, name: string, tasks: Task[] }`
+- Task shape: `{ id: string, text: string, done: boolean, priority: 'alta'|'media'|'baja', createdAt: string (ISO) }`
 
 ### Data Flow
 
-- `ListTasks` owns all state and passes callbacks (`addTask`, `deleteTask`, `checkTask`) down as props
-- `TaskForm` calls `addTask` on form submit with a new task object
-- `Task` calls `checkTask`/`deleteTask` via props on user interaction
+- `App` owns all state (projects + active selection) and passes callbacks down
+- `ProjectTabs` handles project CRUD (add, rename, delete, select)
+- `ListTasks` manages filtering (todas/pendientes/completadas) and delegates task mutations up to `App`
+- `TaskForm` calls `addTask` with text + priority
+- `Task` supports check/uncheck, inline edit, and delete via prop callbacks
+
+### Features
+
+- **Project tabs:** Multiple task lists organized by project
+- **Task priorities:** Alta (red), Media (orange), Baja (cyan) — visual badges
+- **Inline editing:** Edit task text without leaving the list
+- **Filtering:** View all, pending, or completed tasks
+- **Stats bar:** Live counters for total/pending/completed tasks
+- **localStorage persistence:** Data survives page refresh
 
 ### Styling Conventions
 
 - One CSS file per component in `src/css-custom/`
 - Global styles in `src/index.css` and `src/App.css`
-- Dark theme: backgrounds `#1b1b32`, `#2a2a40`, `#3b3b4f`; purple accent `#5a01a7`; green button `#00471b`
-- Fonts: Lato (body), Roboto (headers)
-- Layout: Flexbox, max-width 600px container
+- **Back to the Future vintage theme:**
+  - Background: `#0a0a0f` (near black)
+  - Primary neon: `#ff6600` / `#ff8800` (orange glow)
+  - Secondary neon: `#00ccff` (cyan)
+  - Success: `#00ff88` (green)
+  - Danger: `#ff3333` (red)
+  - Glow effects via `text-shadow` and `box-shadow`
+- Fonts: Orbitron (titles), Share Tech Mono (labels/mono), Rajdhani (body)
+- Layout: Flexbox, max-width 650px container
 
 ## Linting
 
@@ -106,6 +129,7 @@ ESLint configured via CRA defaults in `package.json`:
 - **File naming:** Component files use camelCase (e.g., `listTasks.jsx`, `taskForm.jsx`)
 - **CSS:** Add component styles in `src/css-custom/` with matching filename
 - **No TypeScript:** Project uses plain JS/JSX
-- **State:** Keep state in the nearest common ancestor; pass via props
+- **State:** App owns project/task state; pass via props. Always persist to localStorage
+- **Theme:** Maintain the Back to the Future vintage aesthetic — neon glows, dark backgrounds, Orbitron/Share Tech Mono fonts
 - **Testing:** Add tests alongside components using React Testing Library patterns
 - **No env files:** No environment variables are currently in use
